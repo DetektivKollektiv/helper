@@ -1,0 +1,32 @@
+service: detektivkollektiv-helper
+
+provider:
+  name: aws
+  runtime: python3.8
+
+#  stage: dev
+  region: eu-central-1
+
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "cloudfront:*"
+      Resource: "*"
+
+
+functions:
+  cloudfront_invalidation-dev:
+    handler: handler.create_invalidation
+    environment:
+      DISTRIBUTION_ID: E28DA0RSPRP890
+      
+  cloudfront_invalidation-qa:
+    handler: handler.create_invalidation
+    environment:
+      DISTRIBUTION_ID: EC6BQ48XG7FIQ
+      
+  cloudfront_invalidation-prod:
+    handler: handler.create_invalidation
+    environment:
+      DISTRIBUTION_ID: E2GEGWI09KRLXQ
+
