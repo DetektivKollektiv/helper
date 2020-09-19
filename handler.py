@@ -1,6 +1,7 @@
 import json
 import os
 import boto3
+import time
 
 def create_invalidation(event, context):
     client = boto3.client('cloudfront')
