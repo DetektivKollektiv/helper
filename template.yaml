@@ -47,26 +47,29 @@ Resources:
   CreateInvalidationRole:
     Type: AWS::IAM::Role
     Properties:
-        AssumeRolePolicyDocument: >
-            {
-              "Version": "2012-10-17",
-              "Statement": [
-                {
-                  "Sid": "CreateInvalidationPolicy",
-                  "Effect": "Allow",
-                  "Action": [
-                    "cloudfront:CreateInvalidation",
-                    "codepipeline:PutJobFailureResult",
-                    "codepipeline:PutJobSuccessResult",
-                    "logs:PutLogEvents",
-                    "logs:CreateLogStream",
-                    "logs:CreateLogGroup"
-                  ],
-                  "Resource": "*"
-                }
-              ]
-            }
-
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+              - lambda.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Policies:
+        - PolicyName: CreateInvalidationRole
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - cloudfront:CreateInvalidation
+                  - codepipeline:PutJobFailureResult
+                  - codepipeline:PutJobSuccessResult
+                  - logs:PutLogEvents
+                  - logs:CreateLogStream
+                  - logs:CreateLogGroup
+                Resource: '*'
 
 Outputs:
   CreateInvalidationFunctionDev:
