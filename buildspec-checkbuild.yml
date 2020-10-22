@@ -23,4 +23,4 @@ phases:
   build:
     commands:
       - cfn-lint -t ./template.yaml
-      - cfn_nag_scan -t ./template.yaml
+      - cfn_nag_scan -i . -t template.yaml
