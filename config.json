@@ -1,0 +1,10 @@
+  
+{
+    "Parameters" : {
+        "DistributionId"
+    },
+    "Tags" : {
+      "stage" : "all",
+      "buildingblock": "helper"
+    }
+  }
