@@ -45,9 +45,9 @@ Resources:
     Type: AWS::IAM::Policy
     Properties:
         Roles:
-            - !GetAtt CreateInvalidationFunctionDevRole.Arn
-            - !GetAtt CreateInvalidationFunctionQaRole.Arn
-            - !GetAtt CreateInvalidationFunctionProdRole.Arn
+            - CreateInvalidationFunctionDevRole
+            - CreateInvalidationFunctionQaRole
+            - CreateInvalidationFunctionProdRole
         PolicyDocument: >
           {
             "Version": "2012-10-17",
