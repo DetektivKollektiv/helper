@@ -1,0 +1,26 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.8
+      ruby: latest
+    commands:
+      - pip install --upgrade pip
+      
+      # Upgrade AWS CLI to the latest version
+      - pip install --upgrade awscli
+      
+      # Install linter for CloudFormation template
+      - pip install cfn-lint
+      
+      # Install cfn-nag
+      - gem install cfn-nag
+      
+      # Install requirements
+      - pip install -r ./requirements.txt 
+
+  build:
+    commands:
+      - cfn-lint -t ./template.yaml
+      - cfn_nag_scan -t ./template.yaml
