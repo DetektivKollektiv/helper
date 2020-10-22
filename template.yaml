@@ -21,6 +21,7 @@ Resources:
         Variables:
           DISTRIBUTION_ID: 
             Ref: DistributionIdDev
+      Role: !GetAtt CreateInvalidationRole.Arn
   CreateInvalidationFunctionQa:
     Type: AWS::Serverless::Function
     Properties:
@@ -31,6 +32,7 @@ Resources:
         Variables:
           DISTRIBUTION_ID: 
             Ref: DistributionIdQa
+      Role: !GetAtt CreateInvalidationRole.Arn
   CreateInvalidationFunctionProd:
     Type: AWS::Serverless::Function
     Properties:
@@ -41,34 +43,29 @@ Resources:
         Variables:
           DISTRIBUTION_ID: 
             Ref: DistributionIdProd
-  CreateInvalidationPolicy:
-    Type: AWS::IAM::Policy
+      Role: !GetAtt CreateInvalidationRole.Arn
+  CreateInvalidationRole:
+    Type: AWS::IAM::Role
     Properties:
-        Roles:
-            - CreateInvalidationFunctionDevRole
-            - CreateInvalidationFunctionQaRole
-            - CreateInvalidationFunctionProdRole
-        PolicyDocument: >
-          {
-            "Version": "2012-10-17",
-            "Statement": [
-              {
-                "Sid": "CreateInvalidationPolicy",
-                "Effect": "Allow",
-                "Action": [
-                  "cloudfront:CreateInvalidation",
-                  "codepipeline:PutJobFailureResult",
-                  "codepipeline:PutJobSuccessResult",
-                  "logs:PutLogEvents",
-                  "logs:CreateLogStream",
-                  "logs:CreateLogGroup"
-                ],
-                "Resource": "*"
-              }
-            ]
-          }
-    
-        PolicyName: CreateInvalidationPolicy
+        AssumeRolePolicyDocument: >
+            {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Sid": "CreateInvalidationPolicy",
+                  "Effect": "Allow",
+                  "Action": [
+                    "cloudfront:CreateInvalidation",
+                    "codepipeline:PutJobFailureResult",
+                    "codepipeline:PutJobSuccessResult",
+                    "logs:PutLogEvents",
+                    "logs:CreateLogStream",
+                    "logs:CreateLogGroup"
+                  ],
+                  "Resource": "*"
+                }
+              ]
+            }
 
 
 Outputs:
