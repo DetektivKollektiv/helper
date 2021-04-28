@@ -6,8 +6,10 @@ import time
 def create_invalidation(event, context):
     client = boto3.client('cloudfront')
     
+    distributionId = event['CodePipeline.job']['data']['actionConfiguration']['configuration']['UserParameters']
+
     invalidation = client.create_invalidation(
-        DistributionId=os.environ['DISTRIBUTION_ID'],
+        DistributionId=distributionId,
         InvalidationBatch={
             'Paths': {
                 'Quantity': 1,

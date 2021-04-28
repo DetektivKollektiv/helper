@@ -32,9 +32,7 @@ phases:
     commands:
       # Use AWS SAM to package the application by using AWS CloudFormation
       - aws cloudformation package --template-file ./template.yaml --s3-bucket $S3_BUCKET --output-template-file template-export.yml
-      - printf '{"Parameters":{"DistributionIdDev":"%s","DistributionIdQa":"%s","DistributionIdProd":"%s"}}' "$DISTRIBUTION_ID_DEV" "$DISTRIBUTION_ID_QA" "$DISTRIBUTION_ID_PROD" > config.json
 
 artifacts:
   files:
     - template-export.yml
-    - config.json
