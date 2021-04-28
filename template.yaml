@@ -1,48 +1,14 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: "SAM Template for DetektivKollektiv Helper"
-
-Parameters:
-  DistributionIdDev:
-    Type: String
-  DistributionIdQa:
-    Type: String
-  DistributionIdProd:
-    Type: String
+Description: "SAM Template for codetekt helper functions"
     
 Resources:
-  CreateInvalidationFunctionDev:
+  CreateInvalidationFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: .
       Handler: handler.create_invalidation
       Runtime: python3.8
-      Environment:
-        Variables:
-          DISTRIBUTION_ID: 
-            Ref: DistributionIdDev
-      Role: !GetAtt CreateInvalidationRole.Arn
-  CreateInvalidationFunctionQa:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: .
-      Handler: handler.create_invalidation
-      Runtime: python3.8
-      Environment:
-        Variables:
-          DISTRIBUTION_ID: 
-            Ref: DistributionIdQa
-      Role: !GetAtt CreateInvalidationRole.Arn
-  CreateInvalidationFunctionProd:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: .
-      Handler: handler.create_invalidation
-      Runtime: python3.8
-      Environment:
-        Variables:
-          DISTRIBUTION_ID: 
-            Ref: DistributionIdProd
       Role: !GetAtt CreateInvalidationRole.Arn
   CreateInvalidationRole:
     Type: AWS::IAM::Role
@@ -72,12 +38,6 @@ Resources:
                 Resource: '*'
 
 Outputs:
-  CreateInvalidationFunctionDev:
-    Description: "Create DEV Invalidation Function"
-    Value: !GetAtt CreateInvalidationFunctionDev.Arn
-  CreateInvalidationFunctionQa:
-    Description: "Create QA Invalidation Function"
-    Value: !GetAtt CreateInvalidationFunctionQa.Arn
-  CreateInvalidationFunctionProd:
-    Description: "Create PROD Invalidation Function"
-    Value: !GetAtt CreateInvalidationFunctionProd.Arn
+  CreateInvalidationFunction:
+    Description: "Create Invalidation Function"
+    Value: !GetAtt CreateInvalidationFunction.Arn
